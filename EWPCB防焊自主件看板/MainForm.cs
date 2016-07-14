@@ -46,14 +46,16 @@ namespace EWPCB防焊自主件看板
                     }
                 }
             }
+            //1920*1080
             dgvData.DataSource = srcData;
-            dgvData.Columns["料號"].Width = 200;
-            dgvData.Columns["機台號"].Width = 100;
-            dgvData.Columns["檢修數"].Width = 100;
-            dgvData.Columns["結果"].Width = 335;
-            dgvData.Columns["檢驗人"].Width = 100;
-            dgvData.Columns["放板時間"].Width = 250;
-            dgvData.Columns["結束時間"].Width = 250;
+            dgvData.RowHeadersWidth = 70;
+            dgvData.Columns["料號"].Width = 285;
+            dgvData.Columns["機台號"].Width = 180;
+            dgvData.Columns["檢修數"].Width = 180;
+            dgvData.Columns["結果"].Width = 250;
+            dgvData.Columns["檢驗人"].Width = 200;
+            dgvData.Columns["放板時間"].Width = 400;
+            dgvData.Columns["結束時間"].Width = 400;
             dgvData.DataBindingComplete += ChangRowColor;
         }
 
@@ -67,12 +69,21 @@ namespace EWPCB防焊自主件看板
                     row.DefaultCellStyle.BackColor = Color.Lime;
                     row.DefaultCellStyle.SelectionBackColor = Color.Lime;
                     row.DefaultCellStyle.SelectionForeColor = Color.Black;
+                    row.Height = 50;
                 }
                 else if (Convert.ToString(row.Cells["結果"].Value).Trim().ToUpper() != "")
                 {
                     row.DefaultCellStyle.BackColor = Color.LightSalmon;
                     row.DefaultCellStyle.SelectionBackColor = Color.LightSalmon;
                     row.DefaultCellStyle.SelectionForeColor = Color.Black;
+                    row.Height = 50;
+                }
+                else
+                {
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    row.DefaultCellStyle.SelectionBackColor = Color.White;
+                    row.DefaultCellStyle.SelectionForeColor = Color.Black;
+                    row.Height = 50;
                 }
             }
         }
