@@ -33,7 +33,7 @@ namespace EWPCB防焊自主件看板
         {
             srcData.Clear();
             writeLog = File.AppendText(LogPath);
-            strComm = "select partnum as '料號',machineno as '機台號',workqnty as '檢修數',qcresult as '結果'," +
+            strComm = "select partnum as '料號',machineno+'-'+empname as '曝光手',workqnty as '檢修數',qcresult as '結果'," +
                 "qcman as '檢驗人',CONVERT(char(19), starttime, 120) as '放板時間',CONVERT(char(19),endtime,120) " +
                 "as '結束時間' from drymcse where departname = 'LF' and process = '自主件' and todo = 1 and " +
                 "starttime >='" + date + "' order by starttime desc";
@@ -64,8 +64,8 @@ namespace EWPCB防焊自主件看板
             dgvData.DataSource = srcData;
             dgvData.RowHeadersWidth = 70;
             dgvData.Columns["料號"].Width = 285;
-            dgvData.Columns["機台號"].Width = 180;
-            dgvData.Columns["檢修數"].Width = 180;
+            dgvData.Columns["曝光手"].Width = 175;
+            dgvData.Columns["檢修數"].Width = 175;
             dgvData.Columns["結果"].Width = 250;
             dgvData.Columns["檢驗人"].Width = 200;
             dgvData.Columns["放板時間"].Width = 400;
