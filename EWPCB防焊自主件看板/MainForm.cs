@@ -49,8 +49,8 @@ namespace EWPCB防焊自主件看板
                         /*
                         writeLog.WriteLine(updateTime + "     " + "Update OK！");
                         writeLog.Flush();
-                        writeLog.Close();
                         */
+                        writeLog.Close();
                     }
                     catch (Exception ex)
                     {
