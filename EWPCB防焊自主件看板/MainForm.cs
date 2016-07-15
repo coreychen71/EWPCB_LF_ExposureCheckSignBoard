@@ -85,6 +85,21 @@ namespace EWPCB防焊自主件看板
                     row.DefaultCellStyle.SelectionForeColor = Color.Black;
                     row.Height = 50;
                 }
+                else if (Convert.ToString(row.Cells["結果"].Value).Trim().Contains("曝偏"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.Magenta;
+                    row.DefaultCellStyle.SelectionBackColor = Color.Magenta;
+                    row.DefaultCellStyle.SelectionForeColor = Color.Black;
+                    row.Height = 50;
+                }
+                else if (Convert.ToString(row.Cells["結果"].Value).Trim().ToUpper().Contains("SMD") &&
+                    Convert.ToString(row.Cells["結果"].Value).Trim().Contains("smd"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                    row.DefaultCellStyle.SelectionBackColor = Color.Red;
+                    row.DefaultCellStyle.SelectionForeColor = Color.Black;
+                    row.Height = 50;
+                }
                 else if (Convert.ToString(row.Cells["結果"].Value).Trim().ToUpper() != "")
                 {
                     row.DefaultCellStyle.BackColor = Color.LightSalmon;
