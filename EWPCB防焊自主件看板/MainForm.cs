@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -10,15 +11,19 @@ namespace EWPCB防焊自主件看板
     {
         string strCon = "server=EWNAS;database=ME;uid=me;pwd=2dae5na";
         string strComm = "";
+        string LogPath = Directory.GetCurrentDirectory() + @"\ErrLog.txt";
         DataTable srcData = new DataTable();
         DateTime date = DateTime.Now;
         DateTime updateTime = DateTime.Now;
-        int clock = 180;
+        int setTime = 180;
+        int clock = 0;
+        StreamWriter writeLog;
         public MainForm()
         {
             InitializeComponent();
             dgvData.ReadOnly = true;
             DataRefresh(date.ToString("yyyy-MM-dd 00:00:00"));
+            clock = setTime;
             Text = "防焊曝光自主件檢驗看板(" + clock + ") - " + updateTime.ToString("yyyy-MM-dd HH:mm:ss");
             tmrRefresh.Interval = 1000;
             tmrRefresh.Start();
@@ -26,6 +31,8 @@ namespace EWPCB防焊自主件看板
 
         private void DataRefresh(string date)
         {
+            srcData.Clear();
+            writeLog = File.AppendText(LogPath);
             strComm = "select partnum as '料號',machineno as '機台號',workqnty as '檢修數',qcresult as '結果'," +
                 "qcman as '檢驗人',CONVERT(char(19), starttime, 120) as '放板時間',CONVERT(char(19),endtime,120) " +
                 "as '結束時間' from drymcse where departname = 'LF' and process = '自主件' and todo = 1 and " +
@@ -39,10 +46,17 @@ namespace EWPCB防焊自主件看板
                         sqlcon.Open();
                         SqlDataReader read = sqlcomm.ExecuteReader();
                         srcData.Load(read);
+                        /*
+                        writeLog.WriteLine(updateTime + "     " + "Update OK！");
+                        writeLog.Flush();
+                        writeLog.Close();
+                        */
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        writeLog.WriteLine(updateTime + "     " + ex.Message);
+                        writeLog.Flush();
+                        writeLog.Close();
                     }
                 }
             }
@@ -97,7 +111,7 @@ namespace EWPCB防焊自主件看板
                 date = DateTime.Now;
                 updateTime = DateTime.Now;
                 DataRefresh(date.ToString("yyyy-MM-dd 00:00:00"));
-                clock = 180;
+                clock = setTime;
                 Text = "防焊曝光自主件檢驗看板(" + clock + ") - " + updateTime.ToString("yyyy-MM-dd HH:mm:ss");
             }
         }
